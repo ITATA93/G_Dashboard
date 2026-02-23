@@ -110,7 +110,7 @@ get_agent_config() {
         exit 1
     fi
 
-    jq -r ".agents[] | select(.name == \"$agent_name\")" "$MANIFEST_PATH"
+    jq -r ".agents[] | select((.id // .name) == \"$agent_name\" or .name == \"$agent_name\")" "$MANIFEST_PATH"
 }
 
 get_codex_effort() {
@@ -146,7 +146,7 @@ if [ -z "$AGENT_CONFIG" ] || [ "$AGENT_CONFIG" = "null" ]; then
     log_error "Agent '$AGENT_NAME' not found in manifest"
     echo ""
     echo "Available agents:"
-    jq -r '.agents[].name' "$MANIFEST_PATH" 2>/dev/null | sed 's/^/  - /'
+    jq -r '.agents[] | (.id // .name)' "$MANIFEST_PATH" 2>/dev/null | sed 's/^/  - /'
     exit 1
 fi
 
@@ -155,7 +155,7 @@ if [ -n "$VENDOR_OVERRIDE" ]; then
     VENDOR="$VENDOR_OVERRIDE"
     log_info "Using vendor override: $VENDOR"
 else
-    VENDOR=$(echo "$AGENT_CONFIG" | jq -r '.vendor')
+    VENDOR=$(echo "$AGENT_CONFIG" | jq -r '.vendor_preference // .vendor')
 fi
 
 # Validate vendor is supported

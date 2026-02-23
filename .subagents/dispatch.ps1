@@ -48,17 +48,17 @@ if (!(Test-Path $ManifestPath)) {
 $manifest = Get-Content $ManifestPath -Raw | ConvertFrom-Json
 
 # Find agent
-$agent = $manifest.agents | Where-Object { $_.name -eq $AgentName }
+$agent = $manifest.agents | Where-Object { ($_.id -eq $AgentName) -or ($_.name -eq $AgentName) }
 if (!$agent) {
     Write-Err "Agent '$AgentName' not found in manifest"
     Write-Host ""
     Write-Host "Available agents:"
-    $manifest.agents | ForEach-Object { Write-Host "  - $($_.name) (vendor: $($_.vendor))" }
+    $manifest.agents | ForEach-Object { Write-Host "  - $(if ($_.id) { $_.id } else { $_.name }) (vendor: $(if ($_.vendor_preference) { $_.vendor_preference } else { $_.vendor }))" }
     exit 1
 }
 
 # Determine vendor
-$vendor = if ($VendorOverride) { $VendorOverride } else { $agent.vendor }
+$vendor = if ($VendorOverride) { $VendorOverride } elseif ($agent.vendor_preference) { $agent.vendor_preference } else { $agent.vendor }
 
 # Validate vendor is supported
 $supported = $agent.supported_vendors

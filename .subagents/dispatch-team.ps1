@@ -41,10 +41,16 @@ if (!(Test-Path $ManifestPath)) {
 
 $manifest = Get-Content $ManifestPath -Raw | ConvertFrom-Json
 
-# Find team
-$teams = $manifest.agent_teams.teams
+# Find team — supports both .teams (v2) and .agent_teams.teams (legacy)
+$teams = $null
+if ($manifest.teams) {
+    $teams = $manifest.teams
+} elseif ($manifest.agent_teams -and $manifest.agent_teams.teams) {
+    $teams = $manifest.agent_teams.teams
+}
+
 $team = $null
-if ($teams.PSObject.Properties.Match($TeamName).Count -gt 0) {
+if ($teams -and $teams.PSObject.Properties.Match($TeamName).Count -gt 0) {
     $team = $teams.$TeamName
 }
 
@@ -52,7 +58,7 @@ if (!$team) {
     Write-Err "Team '$TeamName' not found in manifest"
     Write-Host ""
     Write-Host "Available teams:"
-    $teams.PSObject.Properties | ForEach-Object { Write-Host "  - $($_.Name) ($($_.Value.execution) execution)" }
+    if ($teams) { $teams.PSObject.Properties | ForEach-Object { Write-Host "  - $($_.Name) ($($_.Value.mode // $_.Value.execution) execution)" } }
     exit 1
 }
 

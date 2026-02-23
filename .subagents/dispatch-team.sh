@@ -45,7 +45,7 @@ Arguments:
   prompt          The overall task for the team
 
 Available teams:
-$(jq -r '.agent_teams[].name' "$MANIFEST_PATH" 2>/dev/null | sed 's/^/  - /')
+$(jq -r '(.teams // .agent_teams.teams // {}) | keys[]' "$MANIFEST_PATH" 2>/dev/null | sed 's/^/  - /')
 EOF
 }
 
@@ -77,7 +77,7 @@ if [ ! -x "$DISPATCH_SCRIPT" ]; then
 fi
 
 # Get team configuration
-TEAM_CONFIG=$(jq -c ".agent_teams[] | select(.name == \"$TEAM_NAME\")" "$MANIFEST_PATH" 2>/dev/null)
+TEAM_CONFIG=$(jq -c "(.teams // .agent_teams.teams // {})[\"$TEAM_NAME\"]" "$MANIFEST_PATH" 2>/dev/null)
 
 if [ -z "$TEAM_CONFIG" ] || [ "$TEAM_CONFIG" = "null" ]; then
     log_error "Team '$TEAM_NAME' not found in manifest"
@@ -85,7 +85,7 @@ if [ -z "$TEAM_CONFIG" ] || [ "$TEAM_CONFIG" = "null" ]; then
     exit 1
 fi
 
-EXEC_MODE=$(echo "$TEAM_CONFIG" | jq -r '.execution')
+EXEC_MODE=$(echo "$TEAM_CONFIG" | jq -r '.mode // .execution // "sequential"')
 AGENTS=$(echo "$TEAM_CONFIG" | jq -r '.agents[]')
 AGENT_COUNT=$(echo "$AGENTS" | wc -w)
 
