@@ -1,39 +1,104 @@
 {
-    "version": "1.0.0",
-    "name": "ag-dashboard_subagents",
-    "description": "Subagent definitions for AG_DASHBOARD.",
+    "version": "2.0.0",
+    "name": "g_dashboard_subagents",
+    "description": "Subagent definitions for G_Dashboard.",
     "agents": [
         {
-            "id": "builder",
-            "name": "Domain Builder",
+            "id": "lead-orchestrator",
+            "name": "Master Orchestrator",
             "vendor_preference": "gemini",
-            "supported_vendors": [
-                "gemini",
-                "claude",
-                "codex"
-            ],
-            "instructions": "You are the domain builder for AG_DASHBOARD. Generate code according to the architecture.",
-            "capabilities": [
-                "code_generation"
-            ],
-            "risk_tier": "medium",
+            "supported_vendors": ["gemini", "claude", "codex"],
+            "instructions": "You are the Master Orchestrator for G_Dashboard. Triage tasks and delegate.",
+            "capabilities": ["triage", "delegation"],
+            "risk_tier": "high",
             "needs_approval": true
         },
         {
             "id": "reviewer",
-            "name": "Code Reviewer",
+            "name": "Audit and Security Reviewer",
             "vendor_preference": "claude",
-            "supported_vendors": [
-                "claude",
-                "codex"
-            ],
-            "instructions": "You are the code reviewer for AG_DASHBOARD. Review code for quality and security.",
-            "capabilities": [
-                "audit",
-                "analyze"
-            ],
+            "supported_vendors": ["gemini", "claude", "codex"],
+            "instructions": "You are the Audit and Security Reviewer for G_Dashboard. Find bugs and audit code.",
+            "capabilities": ["audit", "analyze"],
+            "risk_tier": "medium",
+            "needs_approval": false
+        },
+        {
+            "id": "domain-builder",
+            "name": "Domain Code Engineer",
+            "vendor_preference": "gemini",
+            "supported_vendors": ["gemini", "claude", "codex"],
+            "instructions": "You are the Domain Code Engineer for G_Dashboard. Generate code according to the architecture.",
+            "capabilities": ["code_generation"],
+            "risk_tier": "high",
+            "needs_approval": true
+        },
+        {
+            "id": "support",
+            "name": "Documentation Writer",
+            "vendor_preference": "gemini",
+            "supported_vendors": ["gemini", "claude", "codex"],
+            "instructions": "You are the Documentation Writer for G_Dashboard. Write concise and accurate documentation.",
+            "capabilities": ["doc_writing", "changelog_gen"],
             "risk_tier": "low",
             "needs_approval": false
+        },
+        {
+            "id": "deep-researcher",
+            "name": "Deep Research Specialist",
+            "vendor_preference": "gemini",
+            "supported_vendors": ["gemini", "claude"],
+            "instructions": "You are the Deep Research Specialist for G_Dashboard. Execute comprehensive multi-source research with citations.",
+            "capabilities": ["research", "analysis", "citations"],
+            "risk_tier": "low",
+            "needs_approval": false
+        },
+        {
+            "id": "skill-pool-manager",
+            "name": "Skill Pool Manager",
+            "vendor_preference": "claude",
+            "supported_vendors": ["claude", "codex"],
+            "instructions": "You manage the skill and prompt pool for G_Dashboard. Catalog, audit for injection, compare skills.",
+            "capabilities": ["skill_management", "comparison", "audit"],
+            "risk_tier": "medium",
+            "needs_approval": false
+        },
+        {
+            "id": "skeptic",
+            "name": "Adversarial Critic",
+            "vendor_preference": "claude",
+            "supported_vendors": ["claude", "codex"],
+            "instructions": "You are the Adversarial Critic. You receive ONLY the output of another agent. Find errors, unsupported claims, logical fallacies, and security concerns.",
+            "capabilities": ["adversarial_review", "output_validation", "fact_checking"],
+            "risk_tier": "low",
+            "needs_approval": false,
+            "context_isolation": {
+                "receives": ["agent_output"],
+                "blocked": ["agent_prompt", "agent_reasoning", "system_instructions"]
+            }
         }
-    ]
+    ],
+    "teams": {
+        "full-audit": {
+            "agents": ["reviewer", "lead-orchestrator"],
+            "mode": "sequential",
+            "use_case": "Full project audit with orchestrator oversight"
+        },
+        "code-and-review": {
+            "agents": ["domain-builder", "reviewer"],
+            "mode": "sequential",
+            "use_case": "Generate code then review for quality and security"
+        },
+        "research-and-document": {
+            "agents": ["deep-researcher", "support"],
+            "mode": "sequential",
+            "use_case": "Research a topic then document findings"
+        },
+        "adversarial-review": {
+            "agents": ["domain-builder", "skeptic"],
+            "mode": "sequential",
+            "context_isolation": true,
+            "use_case": "Generate code then have isolated critic validate output"
+        }
+    }
 }
