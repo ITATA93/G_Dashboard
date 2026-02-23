@@ -1,0 +1,39 @@
+{
+    "version": "1.0.0",
+    "name": "ag-dashboard_subagents",
+    "description": "Subagent definitions for AG_DASHBOARD.",
+    "agents": [
+        {
+            "id": "builder",
+            "name": "Domain Builder",
+            "vendor_preference": "gemini",
+            "supported_vendors": [
+                "gemini",
+                "claude",
+                "codex"
+            ],
+            "instructions": "You are the domain builder for AG_DASHBOARD. Generate code according to the architecture.",
+            "capabilities": [
+                "code_generation"
+            ],
+            "risk_tier": "medium",
+            "needs_approval": true
+        },
+        {
+            "id": "reviewer",
+            "name": "Code Reviewer",
+            "vendor_preference": "claude",
+            "supported_vendors": [
+                "claude",
+                "codex"
+            ],
+            "instructions": "You are the code reviewer for AG_DASHBOARD. Review code for quality and security.",
+            "capabilities": [
+                "audit",
+                "analyze"
+            ],
+            "risk_tier": "low",
+            "needs_approval": false
+        }
+    ]
+}

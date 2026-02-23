@@ -1,0 +1,340 @@
+{
+  "name": "antigravity-dashboard",
+  "displayName": "Antigravity Dashboard",
+  "description": "Read-only dashboard for the Antigravity OS ecosystem: tasks, memories, prompts, workflows, projects, and agents",
+  "version": "0.1.0",
+  "publisher": "antigravity",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "antigravity",
+    "dashboard",
+    "postgresql",
+    "agent",
+    "orchestrator"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "antigravity.refreshAll",
+        "title": "Refresh All Views",
+        "category": "Antigravity",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "antigravity.refreshTasks",
+        "title": "Refresh Tasks",
+        "category": "Antigravity",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "antigravity.refreshMemories",
+        "title": "Refresh Memories",
+        "category": "Antigravity",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "antigravity.refreshPrompts",
+        "title": "Refresh Prompts",
+        "category": "Antigravity",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "antigravity.refreshWorkflows",
+        "title": "Refresh Workflows",
+        "category": "Antigravity",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "antigravity.filterTasksByStatus",
+        "title": "Filter Tasks by Status",
+        "category": "Antigravity",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "antigravity.filterTasksByProject",
+        "title": "Filter Tasks by Project",
+        "category": "Antigravity",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "antigravity.searchMemories",
+        "title": "Search Memories",
+        "category": "Antigravity",
+        "icon": "$(search)"
+      },
+      {
+        "command": "antigravity.openWorkflowSpec",
+        "title": "Open Workflow Spec File",
+        "category": "Antigravity",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "antigravity.navigateToProject",
+        "title": "Open Project Directory",
+        "category": "Antigravity",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "antigravity.viewMemoryDetail",
+        "title": "View Memory Detail",
+        "category": "Antigravity",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "antigravity.viewPromptVersions",
+        "title": "View Prompt Versions",
+        "category": "Antigravity",
+        "icon": "$(versions)"
+      },
+      {
+        "command": "antigravity.viewWorkflowDiagram",
+        "title": "View Workflow Diagram",
+        "category": "Antigravity",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "antigravity.connectDatabase",
+        "title": "Connect to Database",
+        "category": "Antigravity",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "antigravity.disconnectDatabase",
+        "title": "Disconnect from Database",
+        "category": "Antigravity",
+        "icon": "$(debug-disconnect)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "antigravity-dashboard",
+          "title": "Antigravity Dashboard",
+          "icon": "media/icons/antigravity.svg"
+        }
+      ]
+    },
+    "views": {
+      "antigravity-dashboard": [
+        {
+          "id": "antigravity-tasks",
+          "name": "Tasks",
+          "contextualTitle": "Antigravity Tasks"
+        },
+        {
+          "id": "antigravity-projects",
+          "name": "Projects",
+          "contextualTitle": "Antigravity Projects"
+        },
+        {
+          "id": "antigravity-memories",
+          "name": "Memories",
+          "contextualTitle": "Antigravity Memories"
+        },
+        {
+          "id": "antigravity-prompts",
+          "name": "Prompts",
+          "contextualTitle": "Antigravity Prompts"
+        },
+        {
+          "id": "antigravity-workflows",
+          "name": "Workflows",
+          "contextualTitle": "Antigravity Workflows"
+        },
+        {
+          "id": "antigravity-agents",
+          "name": "Agents",
+          "contextualTitle": "Antigravity Agents"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "antigravity-tasks",
+        "contents": "No database connection.\n[Connect to Database](command:antigravity.connectDatabase)"
+      },
+      {
+        "view": "antigravity-memories",
+        "contents": "No database connection.\n[Connect to Database](command:antigravity.connectDatabase)"
+      },
+      {
+        "view": "antigravity-prompts",
+        "contents": "No prompts loaded.\n[Connect to Database](command:antigravity.connectDatabase)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "antigravity.refreshTasks",
+          "when": "view == antigravity-tasks",
+          "group": "navigation"
+        },
+        {
+          "command": "antigravity.filterTasksByStatus",
+          "when": "view == antigravity-tasks",
+          "group": "navigation"
+        },
+        {
+          "command": "antigravity.refreshMemories",
+          "when": "view == antigravity-memories",
+          "group": "navigation"
+        },
+        {
+          "command": "antigravity.searchMemories",
+          "when": "view == antigravity-memories",
+          "group": "navigation"
+        },
+        {
+          "command": "antigravity.refreshPrompts",
+          "when": "view == antigravity-prompts",
+          "group": "navigation"
+        },
+        {
+          "command": "antigravity.refreshWorkflows",
+          "when": "view == antigravity-workflows",
+          "group": "navigation"
+        },
+        {
+          "command": "antigravity.refreshAll",
+          "when": "view == antigravity-projects || view == antigravity-agents",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "antigravity.viewMemoryDetail",
+          "when": "view == antigravity-memories && viewItem == memory",
+          "group": "inline"
+        },
+        {
+          "command": "antigravity.viewPromptVersions",
+          "when": "view == antigravity-prompts && viewItem == prompt",
+          "group": "inline"
+        },
+        {
+          "command": "antigravity.openWorkflowSpec",
+          "when": "view == antigravity-workflows && viewItem == workflow",
+          "group": "inline"
+        },
+        {
+          "command": "antigravity.navigateToProject",
+          "when": "view == antigravity-projects && viewItem == project",
+          "group": "inline"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "workbench.view.extension.antigravity-dashboard",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a"
+      }
+    ],
+    "configuration": {
+      "title": "Antigravity Dashboard",
+      "properties": {
+        "antigravity.databaseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "PostgreSQL connection string (e.g., postgresql://user:pass@host:5432/antigravity). Leave empty to use individual fields or local-only mode.",
+          "order": 1
+        },
+        "antigravity.databaseHost": {
+          "type": "string",
+          "default": "10.10.10.101",
+          "description": "PostgreSQL host (used if databaseUrl is empty)",
+          "order": 2
+        },
+        "antigravity.databasePort": {
+          "type": "number",
+          "default": 5432,
+          "description": "PostgreSQL port",
+          "order": 3
+        },
+        "antigravity.databaseName": {
+          "type": "string",
+          "default": "antigravity",
+          "description": "PostgreSQL database name",
+          "order": 4
+        },
+        "antigravity.databaseUser": {
+          "type": "string",
+          "default": "",
+          "description": "PostgreSQL username",
+          "order": 5
+        },
+        "antigravity.databasePassword": {
+          "type": "string",
+          "default": "",
+          "description": "PostgreSQL password",
+          "order": 6
+        },
+        "antigravity.genOsPath": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to GEN_OS directory. Auto-detected from workspace folders if empty.",
+          "order": 7
+        },
+        "antigravity.autoConnect": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically connect to PostgreSQL on extension activation",
+          "order": 8
+        },
+        "antigravity.refreshInterval": {
+          "type": "number",
+          "default": 30000,
+          "description": "Auto-refresh interval in milliseconds (0 to disable). Default: 30000 (30s).",
+          "order": 9
+        },
+        "antigravity.maxResults": {
+          "type": "number",
+          "default": 200,
+          "description": "Maximum rows fetched per query",
+          "order": 10
+        },
+        "antigravity.logLevel": {
+          "type": "string",
+          "default": "info",
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error"
+          ],
+          "description": "Log level for the output channel",
+          "order": 11
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "node esbuild.js --production",
+    "watch": "node esbuild.js --watch",
+    "lint": "eslint src --ext ts",
+    "package": "npx vsce package"
+  },
+  "dependencies": {
+    "pg": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/pg": "^8.11.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.19.8",
+    "eslint": "^8.55.0",
+    "typescript": "^5.3.2"
+  }
+}

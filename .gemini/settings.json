@@ -1,0 +1,7 @@
+{
+  "model": "gemini-2.5-pro",
+  "tools": {
+    "codeExecution": true,
+    "webSearch": true
+  }
+}

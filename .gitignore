@@ -1,0 +1,80 @@
+# Node
+node_modules/
+package-lock.json
+
+# Build output
+dist/
+out/
+*.vsix
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Secrets
+.env
+.env.local
+*.key
+*.pem
+credentials.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+*.bak
+
+# Python (from scaffold)
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+
+# --- Added by GEN_OS migration ---
+# Environment
+*.pyc
+.env.*.local
+.venv_temp/
+# IDEs
+.vscode/
+# Agent logs (don't version temporary logs)
+.gemini/agents/logs/
+.gemini/agents/locks/
+.gemini/brain/daily/
+# Builds
+.next/
+# Docker
+docker-compose.override.yml
+credentials/
+secrets/
+# Caches
+.mypy_cache/
+.ruff_cache/
+# Testing
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.nyc_output/
+# Logs
+*.log
+logs/
+# Knowledge Vault
+*.db
+*.sqlite
+data/knowledge_vault.db
+data/knowledge_repo/
+# Team context (temporary, generated)
+.subagents/_team_context.md
+# Agent config sync (encrypted archives — NEVER commit)
+data/secure/
+scripts/setup/agent_config_sync.py
+scripts/setup/_pack_list.txt
+scripts/setup/_unpack_temp/
