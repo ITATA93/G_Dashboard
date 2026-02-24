@@ -10,6 +10,11 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+- Governance audit: docs/TODO.md created
+- Gemini settings.json verified
+- README.md enhanced with architecture and usage docs
+
 ## [1.0.0] — 2026-02-23
 
 ### Added
