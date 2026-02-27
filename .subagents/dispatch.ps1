@@ -146,9 +146,9 @@ $PrevError
                     throw "claude CLI not found. Install: npm install -g @anthropic-ai/claude-code"
                 }
                 Write-Info "Invoking Claude Code for agent: $AgentName"
-                # Using --yes to forcefully auto-approve tool executions
+                # Use explicit permission mode supported by Claude Code v2.x
                 # Note: Claude writes some output to stderr, we capture it just in case
-                claude --yes -p $CurrentPrompt 2> $ErrorLog.FullName
+                claude --permission-mode bypassPermissions -p $CurrentPrompt 2> $ErrorLog.FullName
                 if ($LASTEXITCODE -ne 0) { throw "Claude execution failed with exit code $LASTEXITCODE" }
             }
             "codex" {
@@ -246,7 +246,7 @@ Apply these learnings and try to fulfill the original request one last time.
         try {
             switch ($vendor) {
                 "gemini" { $FinalPrompt | gemini; if ($LASTEXITCODE -ne 0) { throw "Fallback failed" } }
-                "claude" { claude --yes -p $FinalPrompt; if ($LASTEXITCODE -ne 0) { throw "Fallback failed" } }
+                "claude" { claude --permission-mode bypassPermissions -p $FinalPrompt; if ($LASTEXITCODE -ne 0) { throw "Fallback failed" } }
                 "codex" {
                     $env:CODEX_MODEL_REASONING_EFFORT = $effort
                     codex exec $FinalPrompt; if ($LASTEXITCODE -ne 0) { throw "Fallback failed" }

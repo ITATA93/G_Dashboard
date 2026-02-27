@@ -1,0 +1,77 @@
+{
+  "folders": [
+    {
+      "name": "G_Dashboard",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.venv": true,
+      "**/venv": true,
+      "**/__pycache__": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true
+    },
+    "editor.formatOnSave": true,
+    "editor.rulers": [100],
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+      }
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[markdown]": {
+      "editor.wordWrap": "on",
+      "editor.tabSize": 2,
+      "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
+    "[json]": {
+      "editor.tabSize": 2
+    },
+    "[jsonc]": {
+      "editor.tabSize": 2
+    },
+    "[yaml]": {
+      "editor.tabSize": 2
+    },
+    "files.associations": {
+      "*.toml": "toml",
+      "GEMINI.md": "markdown",
+      "CLAUDE.md": "markdown",
+      "AGENTS.md": "markdown",
+      "CODEX.md": "markdown",
+      ".env*": "dotenv"
+    },
+    "markdownlint.config": {
+      "MD013": false,
+      "MD033": false,
+      "MD041": false
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "yzhang.markdown-all-in-one",
+      "DavidAnson.vscode-markdownlint",
+      "redhat.vscode-yaml",
+      "EditorConfig.EditorConfig",
+      "eamodio.gitlens",
+      "mikestead.dotenv",
+      "ms-playwright.playwright"
+    ]
+  }
+}

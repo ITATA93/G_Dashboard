@@ -7,13 +7,13 @@ const esbuildProblemMatcherPlugin = {
     name: 'esbuild-problem-matcher',
     setup(build) {
         build.onStart(() => {
-            console.log('[build] started');
+            console.log('[watch] build started');
         });
         build.onEnd((result) => {
             for (const { text, location } of result.errors) {
                 console.error(`> ${location.file}:${location.line}:${location.column}: error: ${text}`);
             }
-            console.log('[build] finished');
+            console.log('[watch] build finished');
         });
     },
 };
@@ -35,6 +35,7 @@ async function main() {
 
     if (watch) {
         await ctx.watch();
+        await ctx.rebuild();
     } else {
         await ctx.rebuild();
         await ctx.dispose();

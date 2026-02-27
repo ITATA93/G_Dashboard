@@ -249,8 +249,8 @@ while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
             check_command claude
             log_info "Invoking Claude Code for agent: $AGENT_NAME"
 
-            # Using --yes to forcefully auto-approve tool executions
-            claude --yes -p "$current_prompt" 2> >(tee "$ERROR_LOG" >&2)
+            # Use explicit permission mode supported by Claude Code v2.x
+            claude --permission-mode bypassPermissions -p "$current_prompt" 2> >(tee "$ERROR_LOG" >&2)
             EXIT_CODE=$?
             ;;
 
@@ -345,7 +345,7 @@ Apply these learnings and try to fulfill the original request one last time."
             gemini --yolo "$FINAL_PROMPT"
             EXIT_CODE=$?
         elif [ "$VENDOR" = "claude" ]; then
-            claude --yes -p "$FINAL_PROMPT"
+            claude --permission-mode bypassPermissions -p "$FINAL_PROMPT"
             EXIT_CODE=$?
         else
             CODEX_MODEL_REASONING_EFFORT=$(get_codex_effort "$AGENT_CONFIG") codex exec --dangerously-bypass-approvals-and-sandbox "$FINAL_PROMPT"

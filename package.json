@@ -324,7 +324,10 @@
     "compile": "node esbuild.js --production",
     "watch": "node esbuild.js --watch",
     "lint": "eslint src --ext ts",
-    "package": "npx vsce package"
+    "package": "npx vsce package",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "pg": "^8.13.0"
@@ -336,6 +339,7 @@
     "esbuild": "^0.19.8",
     "eslint": "^8.55.0",
     "typescript": "^5.3.2",
+    "@playwright/test": "^1.41.2",
     "vitest": "^4.0.18"
   }
 }
