@@ -1,9 +1,10 @@
 # TODO - G_Dashboard
 
 ## Backlog
-- [ ] Expand `.gemini/settings.json` with MCP servers
-- [ ] Update `CHANGELOG.md`
 
 ## En Progreso
 
 ## Completado
+
+- [x] Expand `.gemini/settings.json` with MCP servers
+- [x] Update `CHANGELOG.md`

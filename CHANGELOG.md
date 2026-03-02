@@ -14,6 +14,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Governance audit: docs/TODO.md created
 - Gemini settings.json verified
 - README.md enhanced with architecture and usage docs
+- `.gemini/settings.json` expanded with full MCP server configuration (filesystem, github, fetch, gen-memory, gen-tasks, gen-workflows, gen-prompts)
+- Gemini settings aligned with ecosystem standard (profile, agents, experimental, codeExecution, memory, defaults)
+
+### Changed
+- Audit C2: fixed AG_ legacy references, cleaned temp artifacts, added frontmatter
+- Standards normalized: exports/, docs/library/, tests
+- Governance expanded: GEMINI.md, DEVLOG.md populated, stale workspace files removed
 
 ## [1.0.0] — 2026-02-23
 
